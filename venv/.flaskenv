@@ -1,0 +1,2 @@
+FLASK_APP=cookbook
+FLASK_ENV=development
