@@ -1,3 +1,5 @@
+from crypt import methods
+from pprint import pprint
 from flask import jsonify, request, Flask, make_response
 from .extensions import mongo
 from flask_cors import CORS
@@ -24,3 +26,25 @@ def addUser():
   user_collection = mongo.db.users
   user_collection.find_one_and_update({'_id' : clerkGeneratedId}, {"$set": {"email": email}}, upsert=True)
   return 'Added user to Database'
+
+@app.route('/api/recipes', methods = ['GET'])
+def getRecipes():
+  user_collection = mongo.db.users
+  args = request.args
+  clerkGeneratedId = args["id"]
+  user = user_collection.find_one({"_id": clerkGeneratedId})
+  return jsonify(user["recipes"])
+
+@app.route('/api/recipes', methods = ['POST'])
+def saveRecipe():
+  user_collection = mongo.db.users
+  request_data = request.get_json()
+  clerkGeneratedId = request_data["id"]
+  newRecipe = request_data["recipe"]
+  user = user_collection.find_one({"_id": clerkGeneratedId})
+  savedRecipes = set(user["recipes"])
+  savedRecipes.add(newRecipe)
+  savedRecipes = list(savedRecipes)
+  user_collection.find_one_and_update({'_id' : clerkGeneratedId}, {"$set": {"recipes": savedRecipes}})
+  return jsonify(savedRecipes)
+
