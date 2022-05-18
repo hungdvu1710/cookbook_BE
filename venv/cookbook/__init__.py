@@ -47,4 +47,3 @@ def saveRecipe():
   savedRecipes = list(savedRecipes)
   user_collection.find_one_and_update({'_id' : clerkGeneratedId}, {"$set": {"recipes": savedRecipes}})
   return jsonify(savedRecipes)
-
