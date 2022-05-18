@@ -3,12 +3,14 @@ from pprint import pprint
 from flask import jsonify, request, Flask, make_response
 from .extensions import mongo
 from flask_cors import CORS
+import os
 
 config_object = 'cookbook.settings'
 app = Flask (__name__)
 app.config.from_object(config_object)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['MONGO_URI'] = "mongodb+srv://hdvu:jC8mtAEQEx800ZPt@cluster0.tmzhn.mongodb.net/TEST_DB?retryWrites=true&w=majority"
 mongo.init_app(app)
 
 @app.route('/')
