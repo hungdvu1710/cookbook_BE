@@ -10,7 +10,7 @@ app = Flask (__name__)
 app.config.from_object(config_object)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-app.config['MONGO_URI'] = "mongodb+srv://hdvu:jC8mtAEQEx800ZPt@cluster0.tmzhn.mongodb.net/TEST_DB?retryWrites=true&w=majority"
+app.config['MONGO_URI'] = os.environ.get('MONGO_URI')
 mongo.init_app(app)
 
 @app.route('/')
