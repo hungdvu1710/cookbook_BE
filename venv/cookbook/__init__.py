@@ -35,7 +35,7 @@ def getRecipes():
   args = request.args
   clerkGeneratedId = args["id"]
   user = user_collection.find_one({"_id": clerkGeneratedId})
-  if ( "recipe" not in user):
+  if ( "recipes" not in user):
     user_collection.update_one({'_id' : clerkGeneratedId}, {"$set": {"recipes": []}})
     return jsonify([])
   
